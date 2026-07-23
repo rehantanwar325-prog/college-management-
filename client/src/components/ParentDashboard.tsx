@@ -392,20 +392,21 @@ export const ParentDashboard: React.FC = () => {
             <div className="space-y-8 animate-fade-in">
               <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
                 <h3 className="text-base font-bold text-white">Academic Marksheet & Grades</h3>
-                <div className="p-6 bg-white text-slate-900 rounded-2xl space-y-4 font-serif text-xs">
+                <div className="p-4 sm:p-6 bg-white text-slate-900 rounded-2xl space-y-4 font-serif text-xs">
                   <div className="text-center border-b pb-3">
-                    <h2 className="text-lg font-bold text-indigo-900">CAMPUS LEDGER INSTITUTE OF TECHNOLOGY</h2>
+                    <h2 className="text-base sm:text-lg font-bold text-indigo-900">CAMPUS LEDGER INSTITUTE OF TECHNOLOGY</h2>
                     <p className="text-[10px] text-slate-500 font-sans">Official Grade Card Marksheet</p>
                   </div>
-                  <table className="w-full text-left font-sans text-xs border-collapse">
-                    <thead>
-                      <tr className="bg-slate-100 border-b font-bold">
-                        <th className="p-2">Subject Code</th>
-                        <th className="p-2">Subject Name</th>
-                        <th className="p-2">Marks Obtained</th>
-                        <th className="p-2">Grade</th>
-                      </tr>
-                    </thead>
+                  <div className="overflow-x-auto custom-scrollbar">
+                    <table className="w-full text-left font-sans text-xs border-collapse min-w-[450px]">
+                      <thead>
+                        <tr className="bg-slate-100 border-b font-bold">
+                          <th className="p-2">Subject Code</th>
+                          <th className="p-2">Subject Name</th>
+                          <th className="p-2">Marks Obtained</th>
+                          <th className="p-2">Grade</th>
+                        </tr>
+                      </thead>
                     <tbody>
                       {(marksheet?.results || [
                         { subject_code: 'CS101', subject_name: 'Data Structures', total_obtained: 85, grade: 'A' },
@@ -420,6 +421,7 @@ export const ParentDashboard: React.FC = () => {
                       ))}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             </div>
