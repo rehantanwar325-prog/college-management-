@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  aegis-cms:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: aegis_college_system
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./server/database.sqlite:/app/server/database.sqlite
+      - ./server/uploads:/app/server/uploads
+    environment:
+      - PORT=5000
+      - JWT_SECRET=super-secret-college-management-token-key-2026
+      - ENCRYPTION_KEY=1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p
