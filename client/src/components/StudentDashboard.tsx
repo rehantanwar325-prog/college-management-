@@ -17,20 +17,103 @@ export const StudentDashboard: React.FC = () => {
   const studId = profile?.student_id || profile?.id || 1;
   const sectionId = profile?.section_id || 1;
 
-  // States
-  const [studentDetails, setStudentDetails] = useState<any>(null);
-  const [timetable, setTimetable] = useState<any[]>([]);
-  const [materials, setMaterials] = useState<any[]>([]);
-  const [assignments, setAssignments] = useState<any[]>([]);
+  // States pre-populated with rich mock datasets for Standalone Vercel Deployments
+  const [studentDetails, setStudentDetails] = useState<any>({
+    id: 1,
+    first_name: 'Alice',
+    last_name: 'Johnson',
+    roll_no: '101',
+    admission_no: 'ADM-2025-001',
+    course_name: 'B.Tech Computer Science & Engineering',
+    semester: 1,
+    mobile: '9876500001',
+    email: 'alice@college.com',
+    status: 'active',
+    photo_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'
+  });
+
+  const [timetable, setTimetable] = useState<any[]>([
+    { day_of_week: 'Monday', start_time: '09:00', end_time: '10:00', subject_name: 'Programming in C', subject_code: 'CS101', room_number: 'LHC-101', faculty_name: 'Dr. Ramesh Sharma' },
+    { day_of_week: 'Monday', start_time: '10:00', end_time: '11:00', subject_name: 'Engineering Mathematics I', subject_code: 'MATH101', room_number: 'LHC-102', faculty_name: 'Prof. Priya Verma' },
+    { day_of_week: 'Monday', start_time: '11:00', end_time: '12:00', subject_name: 'Digital Logic Design', subject_code: 'CS102', room_number: 'LHC-103', faculty_name: 'Prof. Amit Patel' },
+    { day_of_week: 'Monday', start_time: '14:00', end_time: '16:00', subject_name: 'C Programming Lab', subject_code: 'CS101P', room_number: 'Lab-3', faculty_name: 'Dr. Ramesh Sharma' },
+
+    { day_of_week: 'Tuesday', start_time: '09:00', end_time: '10:00', subject_name: 'Data Structures & Algorithms', subject_code: 'CS201', room_number: 'LHC-101', faculty_name: 'Dr. Ramesh Sharma' },
+    { day_of_week: 'Tuesday', start_time: '10:00', end_time: '11:00', subject_name: 'Object Oriented C++', subject_code: 'CS202', room_number: 'LHC-102', faculty_name: 'Prof. Priya Verma' },
+    { day_of_week: 'Tuesday', start_time: '11:00', end_time: '12:00', subject_name: 'Basic Electrical Engg', subject_code: 'EE201', room_number: 'LHC-104', faculty_name: 'Prof. Vikas Gupta' },
+    { day_of_week: 'Tuesday', start_time: '14:00', end_time: '16:00', subject_name: 'Data Structures Lab', subject_code: 'CS202P', room_number: 'Lab-2', faculty_name: 'Dr. Ramesh Sharma' },
+
+    { day_of_week: 'Wednesday', start_time: '09:00', end_time: '10:00', subject_name: 'Discrete Mathematics', subject_code: 'CS301', room_number: 'LHC-101', faculty_name: 'Prof. Priya Verma' },
+    { day_of_week: 'Wednesday', start_time: '10:00', end_time: '11:00', subject_name: 'Database Management (DBMS)', subject_code: 'CS302', room_number: 'LHC-102', faculty_name: 'Prof. Amit Patel' },
+    { day_of_week: 'Wednesday', start_time: '11:00', end_time: '12:00', subject_name: 'Computer Architecture', subject_code: 'CS303', room_number: 'LHC-103', faculty_name: 'Prof. Sunita Rao' },
+    { day_of_week: 'Wednesday', start_time: '14:00', end_time: '16:00', subject_name: 'DBMS Laboratory', subject_code: 'CS302P', room_number: 'Lab-1', faculty_name: 'Prof. Amit Patel' },
+
+    { day_of_week: 'Thursday', start_time: '09:00', end_time: '10:00', subject_name: 'Programming in C', subject_code: 'CS101', room_number: 'LHC-101', faculty_name: 'Dr. Ramesh Sharma' },
+    { day_of_week: 'Thursday', start_time: '10:00', end_time: '11:00', subject_name: 'Engineering Mathematics I', subject_code: 'MATH101', room_number: 'LHC-102', faculty_name: 'Prof. Priya Verma' },
+    { day_of_week: 'Thursday', start_time: '11:00', end_time: '12:00', subject_name: 'Software Engineering', subject_code: 'CS304', room_number: 'LHC-105', faculty_name: 'Prof. Vikas Gupta' },
+    { day_of_week: 'Thursday', start_time: '14:00', end_time: '16:00', subject_name: 'Programming Lab', subject_code: 'CS101P', room_number: 'Lab-3', faculty_name: 'Dr. Ramesh Sharma' },
+
+    { day_of_week: 'Friday', start_time: '09:00', end_time: '10:00', subject_name: 'Data Structures & Algorithms', subject_code: 'CS201', room_number: 'LHC-101', faculty_name: 'Dr. Ramesh Sharma' },
+    { day_of_week: 'Friday', start_time: '10:00', end_time: '11:00', subject_name: 'Database Management (DBMS)', subject_code: 'CS302', room_number: 'LHC-102', faculty_name: 'Prof. Amit Patel' },
+    { day_of_week: 'Friday', start_time: '11:00', end_time: '12:00', subject_name: 'Digital Logic Design', subject_code: 'CS102', room_number: 'LHC-103', faculty_name: 'Prof. Sunita Rao' },
+    { day_of_week: 'Friday', start_time: '14:00', end_time: '16:00', subject_name: 'Hardware & Logic Lab', subject_code: 'CS102P', room_number: 'Lab-4', faculty_name: 'Prof. Amit Patel' },
+
+    { day_of_week: 'Saturday', start_time: '09:00', end_time: '10:00', subject_name: 'Technical Seminar & Coding Contest', subject_code: 'SEM101', room_number: 'Auditorium', faculty_name: 'Dr. Ramesh Sharma' },
+    { day_of_week: 'Saturday', start_time: '10:00', end_time: '11:00', subject_name: 'Project Doubt & Mentorship Session', subject_code: 'PRJ101', room_number: 'LHC-101', faculty_name: 'Prof. Priya Verma' }
+  ]);
+
+  const [materials, setMaterials] = useState<any[]>([
+    { id: 1, title: 'Data Structures Notes & Tree Traversal PDF', description: 'Complete notes on Binary Search Trees, AVL Trees & Graph Traversal Algorithms', subject_name: 'Data Structures & Algorithms', file_type: 'pdf', created_at: '2026-07-15' },
+    { id: 2, title: 'DBMS SQL Queries & Normalization Cheatsheet', description: 'SQL Joins, 1NF, 2NF, 3NF & BCNF Normalization solved examples', subject_name: 'Database Management Systems', file_type: 'pdf', created_at: '2026-07-18' }
+  ]);
+  const [assignments, setAssignments] = useState<any[]>([
+    { id: 1, title: 'Assignment 1: Linked List Implementation in C', description: 'Implement Singly, Doubly and Circular Linked Lists with reverse and delete functions.', subject_name: 'Data Structures & Algorithms', due_date: '2026-07-30', max_marks: 20 },
+    { id: 2, title: 'Assignment 2: SQL Complex Joins & Subqueries', description: 'Write SQL queries for hospital management database schema provided.', subject_name: 'Database Management Systems', due_date: '2026-08-05', max_marks: 25 }
+  ]);
   const [submissions, setSubmissions] = useState<any[]>([]);
-  const [marksheet, setMarksheet] = useState<any>(null);
-  const [feeSummary, setFeeSummary] = useState<any>(null);
-  const [payments, setPayments] = useState<any[]>([]);
-  const [booksIssued, setBooksIssued] = useState<any[]>([]);
-  const [leaves, setLeaves] = useState<any[]>([]);
-  const [notices, setNotices] = useState<any[]>([]);
-  const [facultyList, setFacultyList] = useState<any[]>([]);
-  const [allExamsHistory, setAllExamsHistory] = useState<any[]>([]);
+  const [marksheet, setMarksheet] = useState<any>({
+    student: { first_name: 'Alice', last_name: 'Johnson', roll_no: '101', course_name: 'B.Tech CS', semester: 1 },
+    results: [
+      { subject_code: 'CS101', subject_name: 'Programming in C', theory_marks: 88, practical_marks: 0, total_obtained: 88, grade: 'A+' },
+      { subject_code: 'CS102', subject_name: 'Digital Logic Design', theory_marks: 82, practical_marks: 0, total_obtained: 82, grade: 'A' },
+      { subject_code: 'MATH101', subject_name: 'Engineering Mathematics I', theory_marks: 90, practical_marks: 0, total_obtained: 90, grade: 'O' },
+      { subject_code: 'CS101P', subject_name: 'C Programming Lab', theory_marks: 0, practical_marks: 48, total_obtained: 48, grade: 'O' }
+    ]
+  });
+  const [feeSummary, setFeeSummary] = useState<any>({
+    total_fee: 65000,
+    total_paid: 45000,
+    remaining_dues: 20000,
+    due_date: '2026-08-30'
+  });
+  const [payments, setPayments] = useState<any[]>([
+    { id: 1, receipt_no: 'REC-2026-001', amount: 25000, payment_mode: 'UPI / NetBanking', status: 'completed', payment_date: '2026-06-10' },
+    { id: 2, receipt_no: 'REC-2026-042', amount: 20000, payment_mode: 'Credit Card', status: 'completed', payment_date: '2026-07-05' }
+  ]);
+  const [booksIssued, setBooksIssued] = useState<any[]>([
+    { id: 1, book_title: 'Introduction to Algorithms', author: 'Thomas H. Cormen', access_no: 'LIB-101', issue_date: '2026-07-23', due_date: '2026-08-15', status: 'issued' },
+    { id: 2, book_title: 'Database System Concepts', author: 'Silberschatz & Korth', access_no: 'LIB-104', issue_date: '2026-07-10', due_date: '2026-07-25', status: 'issued' }
+  ]);
+  const [leaves, setLeaves] = useState<any[]>([
+    { id: 1, category: 'Medical Leave', faculty_name: 'Dr. Ramesh Sharma (HOD - CSE)', start_date: '2026-07-20', end_date: '2026-07-22', status: 'approved', reason: 'High fever and doctor advised 3 days rest.' }
+  ]);
+  const [notices, setNotices] = useState<any[]>([
+    { id: 1, title: 'Mid-Semester Examination Timetable 2026', content: 'The mid-term exams begin from 1st August 2026. All students check date sheet.', target_role: 'all', created_at: new Date().toISOString() },
+    { id: 2, title: 'Annual Tech Fest & Hackathon Registration', content: 'Register for Cyberia 2026 coding event by 28th July.', target_role: 'student', created_at: new Date().toISOString() }
+  ]);
+  const [facultyList, setFacultyList] = useState<any[]>([
+    { id: 1, name: 'Dr. Ramesh Sharma (HOD - CSE)' },
+    { id: 2, name: 'Prof. Amit Patel (Assoc. Prof - CSE)' },
+    { id: 3, name: 'Prof. Sunita Rao (ECE Dept)' }
+  ]);
+  const [allExamsHistory, setAllExamsHistory] = useState<any[]>([
+    { id: 1, name: 'Monthly Assessment - July', type: 'monthly_test', subject_name: 'Data Structures', date: '2026-07-25', max_marks: 50 },
+    { id: 2, name: 'Weekly Test 2 - Operating Systems', type: 'weekly_test', subject_name: 'Database Management Systems', date: '2026-07-17', max_marks: 20 },
+    { id: 3, name: 'Surprise Quiz - Web Tech', type: 'quiz', subject_name: 'Data Structures Lab', date: '2026-07-12', max_marks: 10 },
+    { id: 4, name: 'Weekly Test 1 - Data Structures', type: 'weekly_test', subject_name: 'Data Structures', date: '2026-07-10', max_marks: 20 },
+    { id: 5, name: 'Unit Test 1 - Mathematics', type: 'unit_test', subject_name: 'Discrete Mathematics', date: '2026-07-05', max_marks: 25 },
+    { id: 6, name: 'Internal Assessment 1', type: 'internal', subject_name: 'All Subjects', date: '2026-06-15', max_marks: 100 }
+  ]);
   const [selectedDayFilter, setSelectedDayFilter] = useState<string>('Today');
 
   // Forms

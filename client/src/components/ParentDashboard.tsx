@@ -13,17 +13,53 @@ export const ParentDashboard: React.FC = () => {
 
   const studentId = profile?.student_id || profile?.student_db_id || 1;
 
-  // States
-  const [childProfile, setChildProfile] = useState<any>(null);
-  const [attendancePercentage, setAttendancePercentage] = useState<number>(100);
-  const [attendanceStats, setAttendanceStats] = useState({ total: 0, present: 0, absent: 0, leave: 0 });
-  const [attendanceLogs, setAttendanceLogs] = useState<any[]>([]);
+  // States pre-populated with rich mock datasets for Standalone Vercel Deployments
+  const [childProfile, setChildProfile] = useState<any>({
+    id: 1,
+    first_name: 'Alice',
+    last_name: 'Johnson',
+    roll_no: '101',
+    admission_no: 'ADM-2025-001',
+    course_name: 'B.Tech Computer Science & Engineering',
+    semester: 1,
+    mobile: '9876500001',
+    email: 'alice@college.com',
+    status: 'active',
+    photo_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'
+  });
+  const [attendancePercentage, setAttendancePercentage] = useState<number>(88);
+  const [attendanceStats, setAttendanceStats] = useState({ total: 50, present: 44, absent: 4, leave: 2 });
+  const [attendanceLogs, setAttendanceLogs] = useState<any[]>([
+    { date: '2026-07-23', subject_name: 'Data Structures & Algorithms', status: 'present', remarks: 'Attended full lecture' },
+    { date: '2026-07-22', subject_name: 'Database Management Systems', status: 'present', remarks: 'Attended lab session' },
+    { date: '2026-07-21', subject_name: 'Engineering Mathematics I', status: 'present', remarks: 'Attended lecture' },
+    { date: '2026-07-20', subject_name: 'C Programming Lab', status: 'leave', remarks: 'Medical leave approved' }
+  ]);
   const [attendanceFilterStatus, setAttendanceFilterStatus] = useState<string>('');
   
-  const [marksheet, setMarksheet] = useState<any>(null);
-  const [feeSummary, setFeeSummary] = useState<any>(null);
-  const [payments, setPayments] = useState<any[]>([]);
-  const [notices, setNotices] = useState<any[]>([]);
+  const [marksheet, setMarksheet] = useState<any>({
+    student: { first_name: 'Alice', last_name: 'Johnson', roll_no: '101', course_name: 'B.Tech CS', semester: 1 },
+    results: [
+      { subject_code: 'CS101', subject_name: 'Programming in C', theory_marks: 88, practical_marks: 0, total_obtained: 88, grade: 'A+' },
+      { subject_code: 'CS102', subject_name: 'Digital Logic Design', theory_marks: 82, practical_marks: 0, total_obtained: 82, grade: 'A' },
+      { subject_code: 'MATH101', subject_name: 'Engineering Mathematics I', theory_marks: 90, practical_marks: 0, total_obtained: 90, grade: 'O' },
+      { subject_code: 'CS101P', subject_name: 'C Programming Lab', theory_marks: 0, practical_marks: 48, total_obtained: 48, grade: 'O' }
+    ]
+  });
+  const [feeSummary, setFeeSummary] = useState<any>({
+    total_fee: 65000,
+    total_paid: 45000,
+    remaining_dues: 20000,
+    due_date: '2026-08-30'
+  });
+  const [payments, setPayments] = useState<any[]>([
+    { id: 1, receipt_no: 'REC-2026-001', amount: 25000, payment_mode: 'UPI / NetBanking', status: 'completed', payment_date: '2026-06-10' },
+    { id: 2, receipt_no: 'REC-2026-042', amount: 20000, payment_mode: 'Credit Card', status: 'completed', payment_date: '2026-07-05' }
+  ]);
+  const [notices, setNotices] = useState<any[]>([
+    { id: 1, title: 'Mid-Semester Examination Timetable 2026', content: 'The mid-term exams begin from 1st August 2026. All students check date sheet.', target_role: 'all', created_at: new Date().toISOString() },
+    { id: 2, title: 'Annual Tech Fest & Hackathon Registration', content: 'Register for Cyberia 2026 coding event by 28th July.', target_role: 'student', created_at: new Date().toISOString() }
+  ]);
 
   const loadChildData = async () => {
     try {
