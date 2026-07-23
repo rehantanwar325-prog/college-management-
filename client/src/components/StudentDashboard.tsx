@@ -631,53 +631,55 @@ export const StudentDashboard: React.FC = () => {
           {/* MARKS */}
           {activeTab === 'marks' && (
             <div className="space-y-8 animate-fade-in">
-              <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl space-y-4">
-                <div className="flex justify-between items-center">
+              <div className="bg-slate-900 border border-slate-800 p-4 sm:p-6 rounded-2xl space-y-4">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                   <h3 className="text-base font-bold text-white">Semester Marksheet Report</h3>
-                  <button onClick={() => window.print()} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2">
+                  <button onClick={() => window.print()} className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 shrink-0">
                     <Printer className="w-4 h-4" /> Print Marksheet
                   </button>
                 </div>
 
-                <div className="p-6 bg-white text-slate-900 rounded-2xl space-y-4 font-serif text-xs">
+                <div className="p-4 sm:p-6 bg-white text-slate-900 rounded-2xl space-y-4 font-serif text-xs">
                   <div className="text-center border-b pb-3">
-                    <h2 className="text-lg font-bold text-indigo-900">CAMPUS LEDGER INSTITUTE OF TECHNOLOGY</h2>
+                    <h2 className="text-base sm:text-lg font-bold text-indigo-900">CAMPUS LEDGER INSTITUTE OF TECHNOLOGY</h2>
                     <p className="text-[10px] text-slate-500 font-sans">Official Grade Card Marksheet</p>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 font-sans font-semibold">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 font-sans font-semibold">
                     <p>Student: {marksheet?.student?.first_name || 'Alice'} {marksheet?.student?.last_name || 'Johnson'}</p>
                     <p>Roll No: {marksheet?.student?.roll_no || '101'}</p>
                     <p>Course: {marksheet?.student?.course_name || 'B.Tech CS'}</p>
                     <p>Semester: {marksheet?.student?.semester || 1}</p>
                   </div>
 
-                  <table className="w-full text-left font-sans text-xs border-collapse">
-                    <thead>
-                      <tr className="bg-slate-100 border-b font-bold">
-                        <th className="p-2">Code</th>
-                        <th className="p-2">Subject</th>
-                        <th className="p-2">Theory</th>
-                        <th className="p-2">Practical</th>
-                        <th className="p-2">Total Marks</th>
-                        <th className="p-2">Grade</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {(marksheet?.results || [
-                        { subject_code: 'CS101', subject_name: 'Data Structures', theory_marks: 85, practical_marks: 0, total_obtained: 85, grade: 'A' },
-                        { subject_code: 'CS102', subject_name: 'Database Systems', theory_marks: 80, practical_marks: 0, total_obtained: 80, grade: 'A' }
-                      ]).map((r: any, idx: number) => (
-                        <tr key={idx} className="border-b">
-                          <td className="p-2 font-mono font-bold">{r.subject_code}</td>
-                          <td className="p-2">{r.subject_name}</td>
-                          <td className="p-2">{r.theory_marks || 0}</td>
-                          <td className="p-2">{r.practical_marks || 0}</td>
-                          <td className="p-2 font-bold">{r.total_obtained}</td>
-                          <td className="p-2 font-bold text-indigo-700">{r.grade}</td>
+                  <div className="overflow-x-auto custom-scrollbar">
+                    <table className="w-full text-left font-sans text-xs border-collapse min-w-[450px]">
+                      <thead>
+                        <tr className="bg-slate-100 border-b font-bold">
+                          <th className="p-2">Code</th>
+                          <th className="p-2">Subject</th>
+                          <th className="p-2">Theory</th>
+                          <th className="p-2">Practical</th>
+                          <th className="p-2">Total Marks</th>
+                          <th className="p-2">Grade</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {(marksheet?.results || [
+                          { subject_code: 'CS101', subject_name: 'Data Structures', theory_marks: 85, practical_marks: 0, total_obtained: 85, grade: 'A' },
+                          { subject_code: 'CS102', subject_name: 'Database Systems', theory_marks: 80, practical_marks: 0, total_obtained: 80, grade: 'A' }
+                        ]).map((r: any, idx: number) => (
+                          <tr key={idx} className="border-b">
+                            <td className="p-2 font-mono font-bold">{r.subject_code}</td>
+                            <td className="p-2">{r.subject_name}</td>
+                            <td className="p-2">{r.theory_marks || 0}</td>
+                            <td className="p-2">{r.practical_marks || 0}</td>
+                            <td className="p-2 font-bold">{r.total_obtained}</td>
+                            <td className="p-2 font-bold text-indigo-700">{r.grade}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
 
