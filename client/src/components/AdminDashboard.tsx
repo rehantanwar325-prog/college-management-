@@ -84,15 +84,90 @@ export const AdminDashboard: React.FC = () => {
   >('overview');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // States for data
-  const [metrics, setMetrics] = useState<any>(null);
-  const [notices, setNotices] = useState<any[]>([]);
-  const [students, setStudents] = useState<any[]>([]);
-  const [courses, setCourses] = useState<any[]>([]);
-  const [departments, setDepartments] = useState<any[]>([]);
-  const [sections, setSections] = useState<any[]>([]);
-  const [subjects, setSubjects] = useState<any[]>([]);
-  const [faculty, setFaculty] = useState<any[]>([]);
+  // Standalone Pre-Populated Mock Datasets (For Vercel & Mobile Deployments)
+  const MOCK_STUDENTS_LIST = Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    first_name: ['Alice', 'Bob', 'Charlie', 'Diana', 'Evan', 'Fiona', 'George', 'Hannah', 'Ian', 'Julia', 'Kevin', 'Laura', 'Michael', 'Nina', 'Oscar', 'Pamela', 'Quinn', 'Ryan', 'Sarah', 'Tom'][i],
+    last_name: ['Johnson', 'Smith', 'Brown', 'Prince', 'Wright', 'Gallagher', 'Clark', 'Abbott', 'Malcolm', 'Roberts', 'Spacey', 'Croft', 'Scott', 'Dobrev', 'Martinez', 'Beesly', 'Fabray', 'Howard', 'Connor', 'Riddle'][i],
+    roll_no: (101 + i).toString(),
+    admission_no: `ADM-2025-00${i + 1}`,
+    course_name: i % 2 === 0 ? 'B.Tech Computer Science' : 'B.Tech Electronics & Comm',
+    course_id: i % 2 === 0 ? 1 : 2,
+    section_id: 1,
+    semester: (i % 8) + 1,
+    status: 'active',
+    mobile: `987650000${i + 1}`,
+    email: `student${i + 1}@college.com`,
+    father_name: `Father of ${['Alice', 'Bob', 'Charlie', 'Diana', 'Evan', 'Fiona', 'George', 'Hannah', 'Ian', 'Julia', 'Kevin', 'Laura', 'Michael', 'Nina', 'Oscar', 'Pamela', 'Quinn', 'Ryan', 'Sarah', 'Tom'][i]}`,
+    mother_name: `Mother of ${['Alice', 'Bob', 'Charlie', 'Diana', 'Evan', 'Fiona', 'George', 'Hannah', 'Ian', 'Julia', 'Kevin', 'Laura', 'Michael', 'Nina', 'Oscar', 'Pamela', 'Quinn', 'Ryan', 'Sarah', 'Tom'][i]}`,
+    dob: '2006-05-15',
+    gender: i % 2 === 0 ? 'Female' : 'Male',
+    category: 'General',
+    blood_group: 'O+',
+    aadhaar: `99887766550${i + 1}`,
+    address_permanent: '123 College Campus Road, Main City',
+    address_current: '123 College Campus Road, Main City',
+    photo_url: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'
+  }));
+
+  const MOCK_FACULTY_LIST = Array.from({ length: 30 }, (_, i) => ({
+    id: i + 1,
+    name: `Prof. ${['Ramesh Sharma', 'Amit Patel', 'Sunita Rao', 'Vikas Gupta', 'Priya Verma', 'Anita Desai', 'Rajesh Kumar', 'Neha Sharma', 'Suresh Nair', 'Kavita Singh', 'Manoj Joshi', 'Pooja Agarwal', 'Deepak Mehta', 'Ritu Saxena', 'Sanjay Mishra', 'Alok Verma', 'Meenakshi Sundaram', 'Tarun Kapoor', 'Shalini Pandey', 'Vivek Oberoi', 'Anjali Menon', 'Nikhil Bhatia', 'Richa Chadha', 'Varun Malhotra', 'Sneha Roy', 'Arjun Kapoor', 'Swati Deshmukh', 'Gaurav Gill', 'Preeti Shenoy', 'Rahul Dravid'][i]}`,
+    email: `faculty${i + 1}@college.com`,
+    department_name: ['Computer Science', 'Electronics & Comm', 'Electrical Engg', 'Basic Sciences', 'Mechanical Engg'][i % 5],
+    designation: i % 3 === 0 ? 'Senior Professor' : i % 2 === 0 ? 'Associate Professor' : 'Assistant Professor',
+    status: 'active'
+  }));
+
+  const MOCK_COURSES_LIST = [
+    { id: 1, name: 'B.Tech Computer Science & Engineering', code: 'CSE', duration_years: 4 },
+    { id: 2, name: 'B.Tech Information Technology', code: 'IT', duration_years: 4 },
+    { id: 3, name: 'B.Tech Electronics & Communication', code: 'ECE', duration_years: 4 },
+    { id: 4, name: 'B.Tech Electrical Engineering', code: 'EE', duration_years: 4 },
+    { id: 5, name: 'B.Tech Mechanical Engineering', code: 'ME', duration_years: 4 },
+    { id: 6, name: 'B.Tech Civil Engineering', code: 'CE', duration_years: 4 },
+    { id: 7, name: 'Master of Computer Applications', code: 'MCA', duration_years: 2 },
+    { id: 8, name: 'Bachelor of Business Administration', code: 'BBA', duration_years: 3 }
+  ];
+
+  // States for data (pre-populated with mock fallbacks for standalone Vercel deployment)
+  const [metrics, setMetrics] = useState<any>({
+    total_students: 20,
+    total_faculty: 30,
+    total_departments: 5,
+    total_courses: 8,
+    fees_collected_this_month: 245000,
+    pending_dues: 35000,
+    active_books_issued: 14
+  });
+  const [notices, setNotices] = useState<any[]>([
+    { id: 1, title: 'Mid-Semester Examination Timetable 2026', content: 'The mid-term exams begin from 1st August 2026. All students check date sheet.', target_role: 'all', created_at: new Date().toISOString() },
+    { id: 2, title: 'Annual Tech Fest & Hackathon Registration', content: 'Register for Cyberia 2026 coding event by 28th July.', target_role: 'student', created_at: new Date().toISOString() },
+    { id: 3, title: 'Faculty HOD & Staff Meeting', content: 'Departmental curriculum review meeting scheduled in Seminar Hall 1.', target_role: 'faculty', created_at: new Date().toISOString() }
+  ]);
+  const [students, setStudents] = useState<any[]>(MOCK_STUDENTS_LIST);
+  const [courses, setCourses] = useState<any[]>(MOCK_COURSES_LIST);
+  const [departments, setDepartments] = useState<any[]>([
+    { id: 1, name: 'School of Computer Science & Engineering', code: 'CSE' },
+    { id: 2, name: 'School of Electronics & Communication', code: 'ECE' },
+    { id: 3, name: 'Department of Electrical Engineering', code: 'EE' },
+    { id: 4, name: 'Department of Basic Sciences & Mathematics', code: 'BSH' },
+    { id: 5, name: 'School of Business Administration', code: 'SBA' }
+  ]);
+  const [sections, setSections] = useState<any[]>([
+    { id: 1, name: 'Section A (CSE - Sem 1)', course_id: 1, semester: 1 },
+    { id: 2, name: 'Section B (CSE - Sem 1)', course_id: 1, semester: 1 },
+    { id: 3, name: 'Section A (ECE - Sem 1)', course_id: 2, semester: 1 }
+  ]);
+  const [subjects, setSubjects] = useState<any[]>([
+    { id: 1, name: 'Programming in C', code: 'CS101', type: 'theory' },
+    { id: 2, name: 'Engineering Mathematics I', code: 'MATH101', type: 'theory' },
+    { id: 3, name: 'Digital Logic Design', code: 'CS102', type: 'theory' },
+    { id: 4, name: 'C Programming Lab', code: 'CS101P', type: 'practical' },
+    { id: 5, name: 'Data Structures & Algorithms', code: 'CS201', type: 'theory' },
+    { id: 6, name: 'Database Management Systems', code: 'CS302', type: 'theory' }
+  ]);
+  const [faculty, setFaculty] = useState<any[]>(MOCK_FACULTY_LIST);
   const [allocations, setAllocations] = useState<any[]>([]);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);

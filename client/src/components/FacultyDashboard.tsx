@@ -12,15 +12,31 @@ export const FacultyDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'overview' | 'attendance' | 'study' | 'exams' | 'leaves'>('overview');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Baseline Allocations
-  const [allocations, setAllocations] = useState<any[]>([]);
+  // Baseline Allocations & Mock Roster (For Standalone Vercel Deployments)
+  const MOCK_FACULTY_STUDENTS = Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    student_id: i + 1,
+    first_name: ['Alice', 'Bob', 'Charlie', 'Diana', 'Evan', 'Fiona', 'George', 'Hannah', 'Ian', 'Julia', 'Kevin', 'Laura', 'Michael', 'Nina', 'Oscar', 'Pamela', 'Quinn', 'Ryan', 'Sarah', 'Tom'][i],
+    last_name: ['Johnson', 'Smith', 'Brown', 'Prince', 'Wright', 'Gallagher', 'Clark', 'Abbott', 'Malcolm', 'Roberts', 'Spacey', 'Croft', 'Scott', 'Dobrev', 'Martinez', 'Beesly', 'Fabray', 'Howard', 'Connor', 'Riddle'][i],
+    roll_no: (101 + i).toString(),
+    admission_no: `ADM-2025-00${i + 1}`,
+    course_name: i % 2 === 0 ? 'B.Tech Computer Science' : 'B.Tech Electronics & Comm',
+    status: 'active',
+    mobile: `987650000${i + 1}`,
+    email: `student${i + 1}@college.com`
+  }));
+
+  const [allocations, setAllocations] = useState<any[]>([
+    { id: 1, subject_name: 'Data Structures & Algorithms', subject_code: 'CS201', course_name: 'B.Tech CS', section_name: 'Section A' },
+    { id: 2, subject_name: 'Database Management Systems', subject_code: 'CS302', course_name: 'B.Tech CS', section_name: 'Section B' }
+  ]);
   const [timetable, setTimetable] = useState<any[]>([]);
-  const [myStudents, setMyStudents] = useState<any[]>([]);
+  const [myStudents, setMyStudents] = useState<any[]>(MOCK_FACULTY_STUDENTS);
   const [loading, setLoading] = useState(false);
 
   // 1. Attendance Marking States
   const [attFilters, setAttFilters] = useState({ date: new Date().toISOString().split('T')[0], allocation_idx: '0' });
-  const [attStudents, setAttStudents] = useState<any[]>([]);
+  const [attStudents, setAttStudents] = useState<any[]>(MOCK_FACULTY_STUDENTS);
   const [attStatusGrid, setAttStatusGrid] = useState<Record<number, { status: 'present' | 'absent' | 'leave'; remarks: string }>>({});
 
   // 2. Study Postings (Upload Notes / Create Assignment)
