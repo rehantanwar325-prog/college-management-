@@ -1,74 +1,55 @@
 @import "tailwindcss";
 
-@layer components {
-  /* Glassmorphism style cards */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+@layer base {
+  :root {
+    --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  
-  .glass-card-dark {
-    background: rgba(15, 23, 42, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-  }
-}
 
-/* Scrollbar customizations */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Print CSS Configurations */
-@media print {
   body {
-    background: #ffffff !important;
-    color: #000000 !important;
-    font-size: 11pt !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  .no-print {
-    display: none !important;
-  }
-  .print-only {
-    display: block !important;
-  }
-  .print-card-shadow {
-    box-shadow: none !important;
-    border: 1px solid #e2e8f0 !important;
+    font-family: var(--font-sans);
+    transition: background-color 0.25s ease, color 0.25s ease;
   }
 }
 
-/* Natural Soft Light Theme System */
+/* =========================================================
+   DARK THEME (Default / .dark / .dark-theme)
+   ========================================================= */
+html.dark,
+html.dark-theme {
+  color-scheme: dark;
+  background-color: #0b0f19;
+  color: #f8fafc;
+}
+
+html.dark body,
+html.dark-theme body {
+  background-color: #0b0f19;
+  color: #f8fafc;
+}
+
+html.dark .text-white,
+html.dark-theme .text-white {
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   LIGHT THEME OVERRIDES (.light-theme) - MASTER ENCOMPASSING
+   ========================================================= */
 html.light-theme {
   color-scheme: light;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
-/* ALL-ENCOMPASSING LIGHT THEME MASTER OVERRIDES */
 html.light-theme body,
-html.light-theme main,
-html.light-theme [class*="bg-slate-950"] {
+html.light-theme main {
   background-color: #f8fafc !important;
-  color: #1e293b !important;
+  color: #0f172a !important;
 }
 
-/* Master background override for dark container classes */
+/* ALL Dark Containers, Cards & Opacity Tints in Light Mode */
+html.light-theme aside,
+html.light-theme header,
 html.light-theme [class*="bg-slate-9"],
 html.light-theme [class*="bg-slate-8"],
 html.light-theme [class*="bg-indigo-9"],
@@ -76,41 +57,166 @@ html.light-theme [class*="bg-indigo-8"],
 html.light-theme [class*="bg-emerald-9"],
 html.light-theme [class*="bg-amber-9"],
 html.light-theme [class*="bg-rose-9"],
-html.light-theme [class*="bg-purple-9"] {
+html.light-theme [class*="bg-purple-9"],
+html.light-theme [class*="bg-cyan-9"],
+html.light-theme [class*="from-indigo-9"],
+html.light-theme [class*="from-slate-9"],
+html.light-theme [class*="from-purple-9"],
+html.light-theme [class*="via-indigo-9"],
+html.light-theme [class*="via-slate-9"],
+html.light-theme [class*="to-indigo-9"],
+html.light-theme [class*="to-slate-9"] {
   background-color: #ffffff !important;
+  background-image: none !important;
   border-color: #e2e8f0 !important;
-  color: #1e293b !important;
+  color: #0f172a !important;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* Outer Main Containers, Navigation, Header & Modals */
-html.light-theme header,
-html.light-theme aside,
-html.light-theme div.fixed div.bg-slate-900,
-html.light-theme div.fixed div.bg-slate-950 {
-  background-color: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  color: #1e293b !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* Inner Sub-Cards, Boxes & Table Headers */
-html.light-theme div.bg-slate-950,
-html.light-theme div[class*="bg-slate-800/"],
-html.light-theme div[class*="bg-slate-900/"],
-html.light-theme td[class*="bg-slate-800/"] {
+/* Inner Sub-cards & Nested Boxes in Light Mode */
+html.light-theme [class*="bg-slate-800\/"],
+html.light-theme [class*="bg-slate-900\/"],
+html.light-theme [class*="bg-indigo-900\/"],
+html.light-theme [class*="bg-indigo-950\/"] {
   background-color: #f8fafc !important;
+  background-image: none !important;
   border-color: #e2e8f0 !important;
-  color: #1e293b !important;
+  color: #0f172a !important;
 }
 
-/* Badge & Pill Overrides in Light Mode */
-html.light-theme span[class*="bg-slate-"],
-html.light-theme span[class*="bg-indigo-9"],
-html.light-theme span[class*="bg-emerald-9"],
-html.light-theme span[class*="bg-amber-9"] {
-  background-color: #f1f5f9 !important;
-  color: #334155 !important;
+/* Base Text Colors for Light Mode */
+html.light-theme .text-white,
+html.light-theme .text-slate-100,
+html.light-theme .text-slate-200,
+html.light-theme .text-slate-300 {
+  color: #0f172a !important;
+}
+
+html.light-theme p,
+html.light-theme .text-slate-400,
+html.light-theme .text-slate-500 {
+  color: #475569 !important;
+}
+
+html.light-theme .border-slate-800,
+html.light-theme .border-slate-700,
+html.light-theme [class*="border-slate-"] {
   border-color: #cbd5e1 !important;
+}
+
+/* Badges & Pill Overrides in Light Mode */
+html.light-theme span[class*="bg-indigo-500\/"],
+html.light-theme span[class*="bg-indigo-600\/"] {
+  background-color: #e0e7ff !important;
+  color: #3730a3 !important;
+  border-color: #c7d2fe !important;
+}
+
+html.light-theme span[class*="bg-emerald-500\/"],
+html.light-theme span[class*="bg-emerald-600\/"] {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border-color: #a7f3d0 !important;
+}
+
+html.light-theme span[class*="bg-amber-500\/"],
+html.light-theme span[class*="bg-amber-600\/"] {
+  background-color: #fef3c7 !important;
+  color: #92400e !important;
+  border-color: #fde68a !important;
+}
+
+html.light-theme span[class*="bg-rose-500\/"],
+html.light-theme span[class*="bg-rose-600\/"] {
+  background-color: #ffe4e6 !important;
+  color: #9f1239 !important;
+  border-color: #fecdd3 !important;
+}
+
+html.light-theme span[class*="bg-purple-500\/"],
+html.light-theme span[class*="bg-purple-600\/"] {
+  background-color: #f3e8ff !important;
+  color: #6b21a8 !important;
+  border-color: #e9d5ff !important;
+}
+
+html.light-theme span[class*="bg-cyan-500\/"],
+html.light-theme span[class*="bg-cyan-600\/"] {
+  background-color: #cffafe !important;
+  color: #155e75 !important;
+  border-color: #a5f3fc !important;
+}
+
+/* Glassmorphism Styles */
+.glass-card {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.25);
+  color: #f8fafc;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html.light-theme .glass-card {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05) !important;
+  color: #0f172a !important;
+}
+
+.glass-panel {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  color: #f8fafc;
+}
+
+html.light-theme .glass-panel {
+  background: #ffffff !important;
+  background-image: none !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a !important;
+}
+
+/* Action Buttons High Contrast Overrides (Both Light & Dark Modes) */
+button.bg-indigo-600,
+button.bg-indigo-500,
+button.bg-blue-600,
+button.bg-emerald-600,
+button.bg-rose-600,
+button.btn-glow-indigo,
+.btn-glow-indigo,
+a.bg-indigo-600 {
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
+}
+
+button.bg-indigo-600 *,
+button.bg-indigo-500 *,
+button.btn-glow-indigo *,
+.btn-glow-indigo * {
+  color: #ffffff !important;
+}
+
+/* Secondary Buttons in Light Mode */
+html.light-theme button.bg-slate-800,
+html.light-theme button.bg-slate-900,
+html.light-theme button.bg-slate-950 {
+  background-color: #f1f5f9 !important;
+  background-image: none !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light-theme button.bg-slate-800 *,
+html.light-theme button.bg-slate-900 *,
+html.light-theme button.bg-slate-950 * {
+  color: #0f172a !important;
 }
 
 /* Table Headers & Table Cell Colors in Light Mode */
@@ -129,97 +235,74 @@ html.light-theme tbody tr:hover {
   background-color: #f1f5f9 !important;
 }
 
-/* Today Row Highlight in Light Mode */
-html.light-theme tr.bg-indigo-950\/40,
-html.light-theme tr[class*="bg-indigo-9"] {
-  background-color: #f0f9ff !important;
-  border-color: #bae6fd !important;
-}
-
-/* Profile Banners & Hero Gradients */
-html.light-theme div.from-indigo-900\/40,
-html.light-theme div.via-slate-900,
-html.light-theme div.to-slate-900,
-html.light-theme div[class*="bg-gradient-to-"] {
-  background: #ffffff !important;
-  border-color: #e2e8f0 !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05) !important;
-}
-
-/* Typography & Text Contrast */
-html.light-theme .text-white {
-  color: #0f172a !important;
-}
-
-html.light-theme .text-slate-100,
-html.light-theme .text-slate-200,
-html.light-theme .text-slate-300 {
-  color: #334155 !important;
-}
-
-html.light-theme .text-slate-400,
-html.light-theme .text-slate-500 {
-  color: #64748b !important;
-}
-
-html.light-theme .text-indigo-300,
-html.light-theme .text-indigo-400 {
-  color: #4f46e5 !important;
-}
-
-html.light-theme .text-emerald-300,
-html.light-theme .text-emerald-400 {
-  color: #059669 !important;
-}
-
-html.light-theme .text-amber-300,
-html.light-theme .text-amber-400 {
-  color: #d97706 !important;
-}
-
-html.light-theme .text-rose-300,
-html.light-theme .text-rose-400 {
-  color: #e11d48 !important;
-}
-
-html.light-theme .text-purple-300,
-html.light-theme .text-purple-400 {
-  color: #9333ea !important;
-}
-
-/* Thicker & Crisper Card & Element Outlines */
-html.light-theme .border-slate-800,
-html.light-theme .border-slate-700,
-html.light-theme [class*="border-slate-"] {
-  border-width: 1.5px !important;
-  border-color: #cbd5e1 !important;
-}
-
-html:not(.light-theme) .border-slate-800,
-html:not(.light-theme) .border-slate-700 {
-  border-width: 1.5px !important;
-  border-color: #334155 !important;
-}
-
-html.light-theme div.rounded-xl,
-html.light-theme div.rounded-2xl,
-html.light-theme button[class*="rounded-"],
-html.light-theme input,
-html.light-theme select,
-html.light-theme textarea {
-  border-width: 1.5px !important;
-}
-
 /* Inputs & Form Controls */
+input, select, textarea {
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+  border-color: #6366f1 !important;
+}
+
 html.light-theme input,
 html.light-theme select,
 html.light-theme textarea {
   background-color: #ffffff !important;
-  color: #0f172a !important;
   border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
 html.light-theme input::placeholder,
 html.light-theme textarea::placeholder {
   color: #94a3b8 !important;
+}
+
+html.dark input,
+html.dark select,
+html.dark textarea,
+html.dark-theme input,
+html.dark-theme select,
+html.dark-theme textarea {
+  background-color: rgba(15, 23, 42, 0.8);
+  border-color: rgba(51, 65, 85, 0.8);
+  color: #f8fafc;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Print CSS */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-card-shadow {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+  }
 }
